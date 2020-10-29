@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, Text, Button, linking} from 'react-native';
+import {View, Text, Button} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
@@ -14,14 +14,15 @@ function HomeScreen({navigation}) {
     </View>
   );
 }
-function DetailsScreen({navigation, route}) {
-  const {itemId} = route.params;
+function DetailsScreen(props) {
+  console.log('props', props);
+  const {itemId} = props.route.params.params;
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       <Text>Details Screen{itemId}</Text>
       <Button
         title="Go to Details... again"
-        onPress={() => navigation.navigate('Details')}
+        onPress={() => props.navigation.navigate('Details')}
       />
     </View>
   );
@@ -31,7 +32,6 @@ const Stack = createStackNavigator();
 function App() {
   const deepLinking = {
     prefixes: ['https://demoapp.com', 'demoApp://'],
-    // prefixes: ['app://', 'https://app.com'],
     config: {
       Home: 'HomePath',
       Details: {
@@ -42,6 +42,7 @@ function App() {
       },
     },
   };
+
   //inside prefixes 1 external link https://www.google.com
   //2 one demoApp://
   // in confing u pass initalRouteName here in my case is Home and 2 aru anything pass as key like
